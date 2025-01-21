@@ -1,7 +1,7 @@
-import { main } from "./main";
+import { main } from './main'
 
 declare const global: {
-  [x: string]: unknown;
-};
+  [x: string]: unknown
+}
 
-global.main = main;
+global.main = main
