@@ -1,4 +1,9 @@
-import { writeJsonToDriveFolder, readJsonFromDriveFolder } from './gdrvie'
+import {
+  writeErrorJsonToDriveFolder,
+  writeJsonToDriveFolder,
+  readJsonFromDriveFolder,
+} from './gdrvie'
+import { ErrorFiles } from './types'
 
 /**
  * main 関数
@@ -6,18 +11,30 @@ import { writeJsonToDriveFolder, readJsonFromDriveFolder } from './gdrvie'
  */
 export const main = () => {
   // 任意で書き換えてください
-  const folderId = 'ここに書き込み先のフォルダID'
+  const folderId = ''
   const fileName = 'sample.json'
 
-  // 1. JSON を書き込む
+  // error.json を書き込む
+  const errorData: ErrorFiles = {
+    errorFiles: [
+      {
+        sourceSystemFileId: '1',
+        createdAt: new Date().toISOString(),
+      },
+    ],
+  }
+  const newFileId = writeErrorJsonToDriveFolder(folderId, errorData)
+  console.log(`error.json を作成しました。fileId: ${newFileId}`)
+
+  // JSON を書き込む
   const dataToSave = {
     message: 'Hello, Drive!',
     createdAt: new Date().toISOString(),
   }
-  const newFileId = writeJsonToDriveFolder(folderId, fileName, dataToSave)
-  console.log(`JSONファイルを作成しました。fileId: ${newFileId}`)
+  const newFileId2 = writeJsonToDriveFolder(folderId, fileName, dataToSave)
+  console.log(`JSONファイルを作成しました。fileId: ${newFileId2}`)
 
-  // 2. JSON を読み込む
+  // JSON を読み込む
   const readData = readJsonFromDriveFolder(folderId, fileName)
   console.log('読み込んだ JSON:', readData)
 }

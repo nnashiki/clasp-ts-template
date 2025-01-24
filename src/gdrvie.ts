@@ -1,3 +1,5 @@
+import { ErrorFiles } from './types'
+
 /**
  * Google Drive の指定フォルダに JSON を書き込む関数
  * @param folderId JSON を書き込みたいフォルダのID
@@ -42,4 +44,16 @@ export function readJsonFromDriveFolder(
   const file = files.next()
   const content = file.getBlob().getDataAsString()
   return JSON.parse(content)
+}
+
+/**
+ * Google Drive の指定フォルダに error.json を書き込む関数
+ * @param folderId JSON を書き込みたいフォルダのID
+ * @returns 作成したファイルの fileId
+ */
+export function writeErrorJsonToDriveFolder(
+  folderId: string,
+  errorData: ErrorFiles
+): string {
+  return writeJsonToDriveFolder(folderId, 'error.json', errorData)
 }
